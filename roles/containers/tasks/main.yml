@@ -15,14 +15,12 @@
     mode: '0755'
   become: true
 
-- name: Copy service files to {{ docker_directory }}
-  ansible.builtin.copy:
-    src: "./files/docker/."
+- name: Clone containers repository into {{ docker_directory }}
+  ansible.builtin.git:
+    repo: "{{ containers_repository }}"
     dest: "{{ docker_directory }}"
-    mode: "0644"
-    owner: root
-    group: root
-    remote_src: no
+    version: main
+    force: yes
   become: true
 
 - name: Create docker network
