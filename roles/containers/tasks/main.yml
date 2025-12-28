@@ -23,28 +23,35 @@
     force: yes
   become: true
 
-- name: Create docker network
-  ansible.builtin.command: docker network create proxy-network
-  failed_when: false
+- name: Create Docker network proxy-network
+  community.docker.docker_network:
+    name: proxy-network
+    state: present
   become: true
 
 - name: Launch caddy
-  ansible.builtin.command: docker compose up -d
-  args:
-    chdir: "{{ docker_directory }}/caddy"
+  community.docker.docker_compose_v2:
+    project_src: "{{ docker_directory }}/caddy"
+    state: present
+    recreate: auto
+    remove_orphans: true
   become: true
 
-- name: Launch mc-proxy service
-  ansible.builtin.command: docker compose up -d
-  args:
-    chdir: "{{ docker_directory }}/mc-proxy"
-  environment:
-    MCPROXY_VELOCITY_FORWARDING_SECRET: "{{ mcproxy_velocity_forwarding_secret }}"
-  become_flags: '-E' # preserve env vars
+- name: Launch mc-proxy
+  community.docker.docker_compose_v2:
+    project_src: "{{ docker_directory }}/mc-proxy"
+    state: present
+    pull: always
+    recreate: auto
+    remove_orphans: true
+    environment:
+      MCPROXY_VELOCITY_FORWARDING_SECRET: "{{ mcproxy_velocity_forwarding_secret }}"
   become: true
 
 - name: Launch uptime-kuma
-  ansible.builtin.command: docker compose up -d
-  args:
-    chdir: "{{ docker_directory }}/uptime-kuma"
+  community.docker.docker_compose_v2:
+    project_src: "{{ docker_directory }}/uptime-kuma"
+    state: present
+    recreate: auto
+    remove_orphans: true
   become: true
