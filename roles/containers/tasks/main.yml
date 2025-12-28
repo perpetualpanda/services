@@ -44,8 +44,9 @@
     pull: always
     recreate: auto
     remove_orphans: true
-    environment:
-      MCPROXY_VELOCITY_FORWARDING_SECRET: "{{ mcproxy_velocity_forwarding_secret }}"
+  environment:
+    CFG_VELOCITY_FORWARDING_SECRET: "{{ mcproxy_velocity_forwarding_secret }}"
+  become_flags: -E
   become: true
 
 - name: Launch uptime-kuma
