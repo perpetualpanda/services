@@ -1,28 +1,4 @@
 ---
-- name: Ensure docker daemon settings are configured
-  ansible.builtin.copy:
-    src: ./files/daemon.json
-    dest: /etc/docker/daemon.json
-    owner: root
-    group: root
-    mode: "0644"
-  notify: "Restart Docker service"
-
-- name: Ensure {{ docker_directory }} exists
-  ansible.builtin.file:
-    path: "{{ docker_directory }}"
-    state: directory
-    mode: '0755'
-  become: true
-
-- name: Clone containers repository into {{ docker_directory }}
-  ansible.builtin.git:
-    repo: "{{ containers_repository }}"
-    dest: "{{ docker_directory }}"
-    version: main
-    force: yes
-  become: true
-
 - name: Create Docker network proxy-network
   community.docker.docker_network:
     name: proxy-network
@@ -45,8 +21,7 @@
     recreate: auto
     remove_orphans: true
   environment:
-    CFG_VELOCITY_FORWARDING_SECRET: "{{ mcproxy_velocity_forwarding_secret }}"
-  become_flags: -E
+    MINECRAFT_SERVER_VELOCITY_PROXY_FORWARDING_SECRET: "{{ mc_velocity_proxy_forwarding_secret }}"
   become: true
 
 - name: Launch uptime-kuma

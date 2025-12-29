@@ -1,0 +1,16 @@
+---
+- name: Launch mc-server
+  community.docker.docker_compose_v2:
+    project_src: "{{ docker_directory }}/mc-server"
+    state: present
+    pull: always
+    recreate: auto
+    remove_orphans: true
+  environment:
+    MINECRAFT_SERVER_DISCORD_BOT_AUTH_TOKEN: "{{ mc_discord_bot_auth_token }}"
+    MINECRAFT_SERVER_DISCORD_BOT_CHANNEL_ID: "{{ mc_discord_bot_channel_id }}"
+    MINECRAFT_SERVER_DISCORD_INVITE_LINK: "{{ mc_discord_invite_link }}"
+    MINECRAFT_SERVER_RCON_PASSWORD: "{{ mc_rcon_password }}"
+    MINECRAFT_SERVER_VELOCITY_PROXY_FORWARDING_SECRET: "{{ mc_velocity_proxy_forwarding_secret }}"
+    MINECRAFT_SERVER_WHITELIST_JSON: "{{ mc_whitelist_json }}"
+  become: true

@@ -1,7 +1,16 @@
 ---
-- name: Set up edge vm containers
+- name: Set up edge node
   hosts: vm-edge-pub-westus.scorpion-galaxy.ts.net
   become: true
   gather_facts: no
   roles:
-    - containers
+    - dockerize
+    - ingress
+
+- name: Set up minecraft server
+  hosts: 192.168.0.101
+  become: true
+  gather_facts: no
+  roles:
+    - dockerize
+    - minecraft
