@@ -1,4 +1,20 @@
 ---
+- name: Check mountpoint exist
+  ansible.builtin.file:
+    path: "{{ mountpoint }}"
+    state: directory
+    mode: "{{ permission }}"
+    owner: root
+    group: root
+
+- name: Mount network share
+  ansible.posix.mount:
+    src: "{{ nfs_src }}"
+    path: "{{ mountpoint }}"
+    fstype: nfs
+    opts: "{{ nfs_opts }}"
+    state: mounted
+
 - name: Launch mc-server
   community.docker.docker_compose_v2:
     project_src: "{{ docker_directory }}/mc-server"

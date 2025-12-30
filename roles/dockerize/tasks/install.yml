@@ -23,9 +23,11 @@
     repo: "deb [arch={{ cpu_arch }} signed-by=/etc/apt/trusted.gpg.d/gvisor.asc] {{ gvisor_repo_url }} release main"
     state: present
 
-- name: Ensure Docker is installed
+- name: Ensure Docker and NFS packages are installed
   ansible.builtin.apt:
     name:
+      - nfs-common
+      - nfs4-acl-tools
       - docker-ce
       - docker-ce-cli
       - docker-compose-plugin
