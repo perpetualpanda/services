@@ -1,0 +1,34 @@
+---
+- name: Create Docker network proxy-network
+  community.docker.docker_network:
+    name: proxy-network
+    state: present
+  become: true
+
+- name: Launch caddy
+  community.docker.docker_compose_v2:
+    project_src: "{{ docker_directory }}/caddy"
+    state: present
+    recreate: auto
+    remove_orphans: true
+  become: true
+
+- name: Launch mc-proxy
+  community.docker.docker_compose_v2:
+    project_src: "{{ docker_directory }}/mc-proxy"
+    state: present
+    pull: always
+    recreate: auto
+    remove_orphans: true
+  environment:
+    MINECRAFT_SERVER_VELOCITY_PROXY_FORWARDING_SECRET: "{{ mc_velocity_proxy_forwarding_secret }}"
+    MINECRAFT_SERVER_VELOCITY_PROXY_RCON_PASSWORD: "{{ mc_velocity_proxy_rcon_password }}"
+  become: true
+
+- name: Launch uptime-kuma
+  community.docker.docker_compose_v2:
+    project_src: "{{ docker_directory }}/uptime-kuma"
+    state: present
+    recreate: auto
+    remove_orphans: true
+  become: true

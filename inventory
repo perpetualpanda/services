@@ -1,1 +1,2 @@
-vm-edge-pub-westus.scorpion-galaxy.ts.net ansible_user=ppanda
+offworld.scorpion-galaxy.ts.net ansible_user=ppanda
+192.168.0.100 ansible_user=ppanda

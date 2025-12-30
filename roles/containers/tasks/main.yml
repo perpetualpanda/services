@@ -1,13 +1,4 @@
 ---
-- name: Ensure docker daemon settings are configured
-  ansible.builtin.copy:
-    src: ./files/daemon.json
-    dest: /etc/docker/daemon.json
-    owner: root
-    group: root
-    mode: "0644"
-  notify: "Restart Docker service"
-
 - name: Ensure {{ docker_directory }} exists
   ansible.builtin.file:
     path: "{{ docker_directory }}"
@@ -21,38 +12,4 @@
     dest: "{{ docker_directory }}"
     version: main
     force: yes
-  become: true
-
-- name: Create Docker network proxy-network
-  community.docker.docker_network:
-    name: proxy-network
-    state: present
-  become: true
-
-- name: Launch caddy
-  community.docker.docker_compose_v2:
-    project_src: "{{ docker_directory }}/caddy"
-    state: present
-    recreate: auto
-    remove_orphans: true
-  become: true
-
-- name: Launch mc-proxy
-  community.docker.docker_compose_v2:
-    project_src: "{{ docker_directory }}/mc-proxy"
-    state: present
-    pull: always
-    recreate: auto
-    remove_orphans: true
-  environment:
-    CFG_VELOCITY_FORWARDING_SECRET: "{{ mcproxy_velocity_forwarding_secret }}"
-  become_flags: -E
-  become: true
-
-- name: Launch uptime-kuma
-  community.docker.docker_compose_v2:
-    project_src: "{{ docker_directory }}/uptime-kuma"
-    state: present
-    recreate: auto
-    remove_orphans: true
   become: true
