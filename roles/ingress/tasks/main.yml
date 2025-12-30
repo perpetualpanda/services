@@ -22,6 +22,7 @@
     remove_orphans: true
   environment:
     MINECRAFT_SERVER_VELOCITY_PROXY_FORWARDING_SECRET: "{{ mc_velocity_proxy_forwarding_secret }}"
+    MINECRAFT_SERVER_VELOCITY_PROXY_RCON_PASSWORD: "{{ mc_velocity_proxy_rcon_password }}"
   become: true
 
 - name: Launch uptime-kuma

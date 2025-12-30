@@ -2,3 +2,4 @@
 containers_repository: https://github.com/perpetualpanda/containers.git
 docker_directory: /opt/docker
 mc_velocity_proxy_forwarding_secret: "{{ lookup('bitwarden.secrets.lookup', '4c6b2fc4-f7ad-4ad8-998e-b3c00038403a') }}"
+mc_velocity_proxy_rcon_password: "{{ lookup('bitwarden.secrets.lookup', '364dbb04-8dbd-49c8-afc1-b3c10186fb40') }}"
