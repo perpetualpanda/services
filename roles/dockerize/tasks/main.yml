@@ -1,24 +1,6 @@
 ---
-- name: Ensure docker daemon settings are configured
-  ansible.builtin.copy:
-    src: ./files/daemon.json
-    dest: /etc/docker/daemon.json
-    owner: root
-    group: root
-    mode: "0644"
-  notify: "Restart Docker service"
+- name: Install Docker repo and packages
+  ansible.builtin.import_tasks: install.yml
 
-- name: Ensure {{ docker_directory }} exists
-  ansible.builtin.file:
-    path: "{{ docker_directory }}"
-    state: directory
-    mode: '0755'
-  become: true
-
-- name: Clone containers repository into {{ docker_directory }}
-  ansible.builtin.git:
-    repo: "{{ containers_repository }}"
-    dest: "{{ docker_directory }}"
-    version: main
-    force: yes
-  become: true
+- name: Configure Docker host
+  ansible.builtin.import_tasks: configure.yml

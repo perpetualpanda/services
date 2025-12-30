@@ -1,0 +1,15 @@
+---
+- name: Ensure {{ docker_directory }} exists
+  ansible.builtin.file:
+    path: "{{ docker_directory }}"
+    state: directory
+    mode: '0755'
+  become: true
+
+- name: Clone containers repository into {{ docker_directory }}
+  ansible.builtin.git:
+    repo: "{{ containers_repository }}"
+    dest: "{{ docker_directory }}"
+    version: main
+    force: yes
+  become: true

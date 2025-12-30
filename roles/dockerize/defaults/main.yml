@@ -1,0 +1,8 @@
+---
+sshd_config: /etc/ssh/sshd_config
+timezone: America/Los_Angeles
+docker_repo_key_url: https://download.docker.com/linux/ubuntu/gpg
+docker_repo_url: https://download.docker.com/linux/ubuntu
+gvisor_repo_key_url: https://gvisor.dev/archive.key
+gvisor_repo_url: https://storage.googleapis.com/gvisor/releases
+cpu_arch: amd64

@@ -1,5 +1,4 @@
 ---
-containers_repository: https://github.com/perpetualpanda/containers.git
 docker_directory: /opt/docker
 mc_discord_bot_auth_token: "{{ lookup('bitwarden.secrets.lookup', '4bab3e2c-352b-497b-a872-b3c20164e432') }}"
 mc_discord_bot_channel_id: "{{ lookup('bitwarden.secrets.lookup', '86123af4-57a2-4589-824b-b3c20165f06a') }}"
