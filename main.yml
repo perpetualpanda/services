@@ -8,7 +8,7 @@
     - ingress
 
 - name: Set up minecraft server
-  hosts: 192.168.0.101
+  hosts: 192.168.0.100
   become: true
   gather_facts: no
   roles:
