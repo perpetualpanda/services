@@ -1,0 +1,13 @@
+---
+docker_directory: /opt/docker
+immich_db_data_location: /var/lib/postgres
+immich_db_database_name: immich
+immich_db_password: "{{ lookup('bitwarden.secrets.lookup', '8df7b1f2-c4e1-400b-a808-b3c9006d7f1b') }}"
+immich_db_username: postgres
+immich_tz: America/Los_Angeles
+immich_upload_location: /mnt/immich/library
+immich_version: v2
+nfs_src: "192.168.0.200:/mnt/critical/immich"
+nfs_opts: 'rw,sync'
+mountpoint: "/mnt/immich"
+permission: '0777'

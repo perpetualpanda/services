@@ -7,7 +7,7 @@
     - containers
     - ingress
 
-- name: Set up minecraft server
+- name: Set up external services
   hosts: 192.168.0.100
   become: true
   gather_facts: true
@@ -15,3 +15,12 @@
     - dockerize
     - containers
     - minecraft
+
+- name: Set up internal services
+  hosts: 192.168.0.100
+  become: true
+  gather_facts: true
+  roles:
+    - dockerize
+    - containers
+    - immich
