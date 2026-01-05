@@ -15,6 +15,22 @@
     opts: "{{ nfs_opts }}"
     state: mounted
 
+- name: Write .env file for immich
+  ansible.builtin.copy:
+    dest: "{{ docker_directory }}/immich/.env"
+    content: |
+      DB_DATA_LOCATION={{ immich_db_data_location }}
+      DB_DATABASE_NAME={{ immich_db_database_name }}
+      DB_PASSWORD={{ immich_db_password }}
+      DB_USERNAME={{ immich_db_username }}
+      TZ={{ immich_tz }}
+      UPLOAD_LOCATION={{ immich_upload_location }}
+      IMMICH_VERSION={{ immich_version }}
+    owner: root
+    group: root
+    mode: '0600'
+    force: true # overwrite any existing .env file
+
 - name: Launch immich
   community.docker.docker_compose_v2:
     project_src: "{{ docker_directory }}/immich"
@@ -22,12 +38,4 @@
     pull: always
     recreate: auto
     remove_orphans: true
-  environment:
-    DB_DATA_LOCATION: "{{ immich_db_data_location }}"
-    DB_DATABASE_NAME: "{{ immich_db_database_name }}"
-    DB_PASSWORD: "{{ immich_db_password }}"
-    DB_USERNAME: "{{ immich_db_username }}"
-    TZ: "{{ immich_tz }}"
-    UPLOAD_LOCATION: "{{ immich_upload_location }}"
-    IMMICH_VERSION: "{{ immich_version }}"
   become: true
