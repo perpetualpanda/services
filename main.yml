@@ -17,7 +17,7 @@
     - minecraft
 
 - name: Set up internal services
-  hosts: 192.168.0.100
+  hosts: 192.168.0.210
   become: true
   gather_facts: true
   roles:
